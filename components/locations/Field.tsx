@@ -47,8 +47,11 @@ const Field = () => {
         const base64Url = `data:image/png;base64,${base64Image}`.trim();
         sdk.entry.fields.base64Image.setValue(base64Url);
         setBase64(base64Url);
-        setIsLoading(false);
-      });
+      })
+      .catch((error) => {
+        console.error(error);
+      })
+      .finally(() => setIsLoading(false));
   }, [sdk.entry.fields.base64Image, sdk.entry.fields.image, cma.asset]);
 
   if (isLoading) {
