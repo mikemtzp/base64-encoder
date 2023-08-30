@@ -33,25 +33,26 @@ const Field = () => {
   useEffect(() => sdk.window.startAutoResizer(), [sdk.window]);
 
   useEffect(() => {
-    setIsLoading(true);
-    const image = sdk.entry.fields.image.getValue();
-
-    cma.asset
-      .get({
-        assetId: image.sys.id,
-      })
-      .then((data) => {
+    const fetchImage = async () => {
+      try {
+        setIsLoading(true);
+        const image = sdk.entry.fields.image.getValue();
+        const data = await cma.asset.get({
+          assetId: image.sys.id,
+        });
         const url = data.fields.file['en-US'].url;
         const imageUrl = `https:${url}`.trim();
         const base64Image = nextBase64.encode(imageUrl);
         const base64Url = `data:image/png;base64,${base64Image}`.trim();
         sdk.entry.fields.base64Image.setValue(base64Url);
         setBase64(base64Url);
-      })
-      .catch((error) => {
+      } catch (error) {
         console.error(error);
-      })
-      .finally(() => setIsLoading(false));
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchImage();
   }, [sdk.entry.fields.base64Image, sdk.entry.fields.image, cma.asset]);
 
   if (isLoading) {
