@@ -8,15 +8,6 @@ import Sidebar from '@/components/locations/Sidebar';
 import Page from '@/components/locations/Page';
 import Home from '@/components/locations/Home';
 import { useSDK } from '@contentful/react-apps-toolkit';
-import { GetStaticProps } from 'next';
-
-export const getStaticProps: GetStaticProps = async (context) => {
-  console.log('context', context);
-
-  return {
-    props: {},
-  };
-};
 
 const ComponentLocationSettings = {
   [locations.LOCATION_APP_CONFIG]: ConfigScreen,
