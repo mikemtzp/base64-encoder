@@ -6,7 +6,7 @@ import { createClient } from 'contentful-management';
 
 const Field = () => {
   const sdk = useSDK<FieldAppSDK>();
-  const [base64, setBase64] = useState('');
+  const [dataUrl, setDataUrl] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
   // Access Content Management API with credentials
@@ -75,8 +75,8 @@ const Field = () => {
 
         // Calling the function and handle dataUrl
         resizeImage(imageUrl, 5, function (dataUrl) {
-          setBase64(dataUrl);
-          sdk.entry.fields.base64Image.setValue(dataUrl);
+          setDataUrl(dataUrl);
+          sdk.entry.fields.dataUrl.setValue(dataUrl);
         });
       } catch (error) {
         console.error(error);
@@ -85,7 +85,7 @@ const Field = () => {
       }
     };
 
-    if (sdk.entry.fields.base64Image.getValue().length === undefined) {
+    if (sdk.entry.fields.dataUrl.getValue().length === undefined) {
       fetchImage();
     }
 
@@ -96,7 +96,7 @@ const Field = () => {
     return () => {
       detachValueChangeHandler();
     };
-  }, [sdk.entry.fields.base64Image, sdk.entry.fields.image, cma.asset]);
+  }, [sdk.entry.fields.dataUrl, sdk.entry.fields.image, cma.asset]);
 
   if (isLoading) {
     return <Spinner />;
@@ -104,7 +104,7 @@ const Field = () => {
 
   return (
     <div style={{ display: 'none' }}>
-      <TextInput name='base64Image' value={base64} isReadOnly />
+      <TextInput name='dataUrl' value={dataUrl} isReadOnly />
     </div>
   );
 };
