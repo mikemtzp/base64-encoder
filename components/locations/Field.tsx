@@ -43,6 +43,9 @@ const Field = () => {
         const data = await cma.asset.get({
           assetId: image.sys.id,
         });
+        console.log(data);
+        console.log('data');
+        
 
         // Get image url
         const url = data.fields.file['en-US'].url;
@@ -85,7 +88,7 @@ const Field = () => {
       }
     };
 
-    if (sdk.entry.fields.dataUrl.getValue().length === undefined) {
+    if (sdk.entry.fields.dataUrl.getValue() === undefined) {
       fetchImage();
     }
 
